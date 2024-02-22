@@ -6,9 +6,10 @@ public class ControlFrame extends JFrame {
 
     public ControlFrame(int nbChrono){
 
-        panel.add
-        for(int i = 0; i < nbChrono; i++){
 
+        for(int i = 0; i < nbChrono; i++){
+            ChronoPanel chronoPanel = new ChronoPanel(new Chrono());
+            frame.add(chronoPanel.paintComponent());
         }
     }
 }
