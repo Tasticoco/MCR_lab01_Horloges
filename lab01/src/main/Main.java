@@ -1,19 +1,15 @@
+package main;
+
+import main.Chrono;
+import main.ControlFrame;
+
 import static java.lang.Thread.sleep;
 
 public class Main {
     public static void test() {
         Chrono chrono = new Chrono();
-        ChronoFrame panel = new ChronoFrame();
-        //chrono.addObserver(panel);
-        chrono.start();
+        ControlFrame controlFrame = new ControlFrame(2);
 
-        try {
-            sleep(5000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
-        chrono.stop();
     }
 
     public static void main(String[] args) {

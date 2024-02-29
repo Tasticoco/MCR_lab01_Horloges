@@ -1,4 +1,4 @@
-package ObserversModel;
+package main.observersModel;
 
 import java.util.LinkedList;
 

@@ -1,4 +1,4 @@
-package ObserversModel;
+package main.observersModel;
 
 public interface Observer {
     void update();
