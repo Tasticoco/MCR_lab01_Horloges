@@ -1,6 +1,7 @@
 package main;
 
 import main.displayChronoStyle.*;
+import main.displayChronoStyle.DialType.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -28,10 +29,10 @@ public class ChronoPanel extends JPanel {
         add(num);
 
         start.addActionListener(e -> chrono.start());
-        stop.addActionListener(e -> chrono.stop());
+        stop.addActionListener(e -> chrono.pause());
         reset.addActionListener(e -> chrono.reset());
-        roman.addActionListener(e -> new Dial(chrono));
-        arab.addActionListener(e -> new Dial(chrono));
+        roman.addActionListener(e -> new Roman(chrono));
+        arab.addActionListener(e -> new Arabic(chrono));
         num.addActionListener(e -> new Numeric(chrono));
 
         setVisible(true);

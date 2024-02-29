@@ -18,7 +18,7 @@ public class Chrono extends Subject {
     }
 
     public String toString() {
-        return "ChronoObject.Chrono #" + id;
+        return "Chrono #" + id;
     }
 
     public void start() {
@@ -29,19 +29,30 @@ public class Chrono extends Subject {
                 public void run() {
                     seconds++;
                     System.out.println(seconds);
-                    //obsNotify();
+                    obsNotify();
                 }
             }, 1000, 1000);
+        }
+    }
+
+    public void pause() {
+        if (isRunning) {
+            isRunning = false;
+            obsNotify();
         }
     }
     public void stop() {
         timer.cancel();
         isRunning = false;
-        //obsNotify();
+        obsNotify();
     }
 
     public void reset() {
         seconds = 0;
-        //obsNotify();
+        obsNotify();
+    }
+
+    public long getSeconds() {
+        return seconds;
     }
 }

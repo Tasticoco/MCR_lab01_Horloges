@@ -4,7 +4,7 @@ import java.util.LinkedList;
 
 public abstract class Subject {
 
-    LinkedList<Observer> observers;
+    LinkedList<Observer> observers = new LinkedList<>();
     public void attach(Observer o){
         if(o != null) {
             observers.add(o);
