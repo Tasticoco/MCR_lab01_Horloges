@@ -24,20 +24,22 @@ public class Chrono extends Subject {
     public void start() {
         if (!isRunning) {
             isRunning = true;
-            timer.schedule(new TimerTask() {
-                @Override
-                public void run() {
-                    seconds++;
-                    System.out.println(seconds);
-                    obsNotify();
-                }
-            }, 1000, 1000);
         }
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                if(isRunning) seconds++;
+                System.out.println(seconds);
+                obsNotify();
+            }
+        }, 1000, 1000);
     }
 
     public void pause() {
         if (isRunning) {
             isRunning = false;
+            timer.cancel();
+            timer = new Timer(); // Create a new Timer for when we resume
             obsNotify();
         }
     }
