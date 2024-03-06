@@ -4,25 +4,32 @@ import javax.swing.*;
 import main.observersModel.Observer;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 
 abstract public class ChronoFrame extends JFrame implements Observer {
 
+    protected long time;
     Chrono chrono;
     protected JPanel panel = new JPanel(){
         @Override
         protected void paintComponent(Graphics g) {
             super.paintComponent(g);
-            if(graphImage() != null) {
-                g.drawImage(graphImage(), 0, 0, this); // Dessine l'image au coordonnées x=0, y=0.
-            }
-        }
 
-    };
+                try {
+                    Image img = graphImage();
+                    if (img != null) {
+                        img = img.getScaledInstance(200, 200, Image.SCALE_SMOOTH);
+                        int x = (getWidth() - img.getWidth(null)) / 2;
+                        int y = (getHeight() - img.getHeight(null)) / 2;
+                        g.drawImage(img, x, y, this);
+                    } else {
+                        System.out.println("graphImage() returned null");
+                    }
+                } catch (IOException e) {
+                    System.out.println("IOException occurred in graphImage(): " + e.getMessage());
+                }
 
-    protected JLabel panelText = new JLabel(){
-        @Override
-        protected void paintComponent(Graphics g) {
-            super.paintComponent(g);
 
             if(graphString() != null) {
                 // Get the FontMetrics
@@ -34,24 +41,27 @@ abstract public class ChronoFrame extends JFrame implements Observer {
                 // Draw the String
                 g.drawString(graphString(), x, y);
             }
+
+            BufferedImage hands = drawHands();
+            if(hands != null){
+                g.drawImage(hands, 0, 0, this);
+            }
         }
 
     };
 
 
+
     protected ChronoFrame(Chrono chrono){
         this.chrono = chrono;
         chrono.attach(this);
-        setSize(200, 200);
+        var dim = new Dimension(220,240);
+        setSize(dim);
+        setMinimumSize(dim);
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         setLayout(new BorderLayout());
 
         add(panel, BorderLayout.CENTER);
-
-        // Add panelText to the center of the frame
-        panelText.setHorizontalAlignment(JLabel.CENTER);
-        panelText.setVerticalAlignment(JLabel.CENTER);
-        add(panelText, BorderLayout.CENTER);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent windowEvent) {
                 chrono.detach(ChronoFrame.this);
@@ -67,11 +77,16 @@ abstract public class ChronoFrame extends JFrame implements Observer {
     @Override
     public void update() {
         updateDisplay(chrono.getSeconds());
+        panel.repaint();
     }
 
-    abstract public void updateDisplay(long time);
+    public void updateDisplay(long time) {
+        this.time = time;
+    }
 
-    abstract public Image graphImage();
+    abstract public Image graphImage() throws IOException;
+
+    abstract protected BufferedImage drawHands();
 
     public String graphString(){
         return chrono.toString();
