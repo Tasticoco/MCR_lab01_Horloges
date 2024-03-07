@@ -29,7 +29,6 @@ public class Chrono extends Subject {
             @Override
             public void run() {
                 if(isRunning) seconds++;
-                System.out.println(seconds);
                 obsNotify();
             }
         }, 1000, 1000);
@@ -42,6 +41,7 @@ public class Chrono extends Subject {
             timer = new Timer(); // Create a new Timer for when we resume
             obsNotify();
         }
+        else start();
     }
     public void stop() {
         timer.cancel();

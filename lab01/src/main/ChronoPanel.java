@@ -1,40 +1,56 @@
 package main;
 
-import main.displayChronoStyle.*;
-import main.displayChronoStyle.DialType.*;
+import main.observersModel.Observer;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
-public class ChronoPanel extends JPanel {
-    Chrono chrono;
-    JButton start = new JButton("Démarrer");
-    JButton stop = new JButton("Arrêter");
-    JButton reset = new JButton("Réinitialiser");
-    JButton roman = new JButton("Cadran romain");
-    JButton arab = new JButton("Cadran arabe");
-    JButton num = new JButton("Numérique");
+abstract public class ChronoPanel extends JPanel implements Observer {
+    protected Chrono chrono;
 
-    public ChronoPanel(Chrono c) {
+    protected ChronoPanel(Chrono chrono){
+        this.chrono = chrono;
+        chrono.attach(this);
 
-        chrono = c;
-        setLayout(new FlowLayout(7));
-        add(new JLabel(chrono.toString()));
-        //Adding buttons to the panel
-        add(start);
-        add(stop);
-        add(reset);
-        add(roman);
-        add(arab);
-        add(num);
+        this.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                // Handle the mouse click event here
+                chrono.pause();
+            }
+        });
 
-        start.addActionListener(e -> chrono.start());
-        stop.addActionListener(e -> chrono.pause());
-        reset.addActionListener(e -> chrono.reset());
-        roman.addActionListener(e -> new Roman(chrono));
-        arab.addActionListener(e -> new Arabic(chrono));
-        num.addActionListener(e -> new Numeric(chrono));
+    }
 
-        setVisible(true);
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+    }
+
+    @Override
+    public void update() {
+        repaint();
+    }
+
+    protected void drawText(Graphics g){
+
+        FontMetrics metrics = g.getFontMetrics(g.getFont());
+        // Determine the X coordinate for the text
+        int x = (getWidth() - metrics.stringWidth(graphString())) / 2;
+        // Determine the Y coordinate for the text (note we add the ascent, as in java 2d 0 is top of the screen)
+        int y = ((getHeight() - metrics.getHeight()) / 2) + metrics.getAscent();
+        // Draw the String
+        g.drawString(graphString(), x, y);
+    }
+
+    public String graphString(){
+        return chrono.toString();
+    }
+
+    public void detatch(){
+        chrono.detach(this);
     }
 }

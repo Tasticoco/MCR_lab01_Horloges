@@ -2,6 +2,7 @@ package main.displayChronoStyle;
 
 import main.Chrono;
 import main.ChronoFrame;
+import main.ChronoPanel;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -9,17 +10,30 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
-abstract public class Dial extends ChronoFrame {
+abstract public class Dial extends ChronoPanel {
 
     final int LENGTH_HOUR = 50;
     final int LENGTH_MINUTE = 70;
     final int LENGTH_SECOND = 90;
+    final int IMG_DIMENSION = 200;
+    BufferedImage cachedImage = null;
+
 
     public Dial(Chrono chrono){
         super(chrono);
     }
 
     @Override
+    protected void paintComponent(Graphics g) {
+
+        super.paintComponent(g);
+
+        drawImage(g);
+        drawText(g);
+        g.drawImage(drawHands(), 0, 0, this);
+    }
+
+
     public Image graphImage() throws IOException {
 
         Image img = ImageIO.read(new File(path()));
@@ -33,8 +47,10 @@ abstract public class Dial extends ChronoFrame {
 
     protected abstract String path();
 
-    @Override
+
     protected BufferedImage drawHands() {
+
+        long time = chrono.getSeconds();
         // Create a new BufferedImage and get its Graphics2D object
         BufferedImage image = new BufferedImage(200, 200, BufferedImage.TYPE_INT_ARGB);
         Graphics2D g2d = image.createGraphics();
@@ -70,6 +86,47 @@ abstract public class Dial extends ChronoFrame {
         g2d.drawLine(middle, middle, secondX, secondY);
 
         return image;
+    }
+
+    /**
+     * Converts a given Image into a BufferedImage
+     *
+     * @param img The Image to be converted
+     * @return The converted BufferedImage
+     */
+    public void addImageToCache(Image img)
+    {
+        // Create a buffered image with transparency
+        BufferedImage bimage = new BufferedImage(img.getWidth(null), img.getHeight(null), BufferedImage.TYPE_INT_ARGB);
+
+        // Draw the image on to the buffered image
+        Graphics2D bGr = bimage.createGraphics();
+        bGr.drawImage(img, 0, 0, null);
+        bGr.dispose();
+
+        // add the buffered image to cache
+        cachedImage = bimage;
+
+    }
+
+    private void drawImage(Graphics g){
+        if(cachedImage == null){
+            try {
+                Image img = graphImage();
+                if (img != null) {
+                    img = img.getScaledInstance(IMG_DIMENSION, IMG_DIMENSION, Image.SCALE_SMOOTH);
+                    addImageToCache(img);
+                } else {
+                    System.out.println("graphImage() returned null");
+                }
+            } catch (IOException e) {
+                System.out.println("IOException occurred in graphImage(): " + e.getMessage());
+            }
+        } else {
+            int x = (getWidth() - cachedImage.getWidth(null)) / 2;
+            int y = (getHeight() - cachedImage.getHeight(null)) / 2;
+            g.drawImage(cachedImage,x,y,this);
+        }
     }
 
     protected abstract Color secondColor();
