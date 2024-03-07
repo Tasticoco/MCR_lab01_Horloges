@@ -10,25 +10,30 @@ import java.io.IOException;
 abstract public class ChronoFrame extends JFrame implements Observer {
 
     protected long time;
+    BufferedImage cachedImage = null;
     Chrono chrono;
     protected JPanel panel = new JPanel(){
         @Override
         protected void paintComponent(Graphics g) {
             super.paintComponent(g);
 
+            if(cachedImage == null){
                 try {
                     Image img = graphImage();
                     if (img != null) {
                         img = img.getScaledInstance(200, 200, Image.SCALE_SMOOTH);
-                        int x = (getWidth() - img.getWidth(null)) / 2;
-                        int y = (getHeight() - img.getHeight(null)) / 2;
-                        g.drawImage(img, x, y, this);
+                        addImageToCache(img);
                     } else {
                         System.out.println("graphImage() returned null");
                     }
                 } catch (IOException e) {
                     System.out.println("IOException occurred in graphImage(): " + e.getMessage());
                 }
+            } else {
+                int x = (getWidth() - cachedImage.getWidth(null)) / 2;
+                int y = (getHeight() - cachedImage.getHeight(null)) / 2;
+                g.drawImage(cachedImage,x,y,this);
+            }
 
 
             if(graphString() != null) {
@@ -78,6 +83,27 @@ abstract public class ChronoFrame extends JFrame implements Observer {
     public void update() {
         updateDisplay(chrono.getSeconds());
         panel.repaint();
+    }
+
+    /**
+     * Converts a given Image into a BufferedImage
+     *
+     * @param img The Image to be converted
+     * @return The converted BufferedImage
+     */
+    public void addImageToCache(Image img)
+    {
+        // Create a buffered image with transparency
+        BufferedImage bimage = new BufferedImage(img.getWidth(null), img.getHeight(null), BufferedImage.TYPE_INT_ARGB);
+
+        // Draw the image on to the buffered image
+        Graphics2D bGr = bimage.createGraphics();
+        bGr.drawImage(img, 0, 0, null);
+        bGr.dispose();
+
+        // add the buffered image to cache
+        cachedImage = bimage;
+
     }
 
     public void updateDisplay(long time) {
