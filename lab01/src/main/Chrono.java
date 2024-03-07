@@ -41,7 +41,7 @@ public class Chrono extends Subject {
             timer = new Timer(); // Create a new Timer for when we resume
             obsNotify();
         }
-        else start();
+        else start(); // It's especially used for when we click on the clock itself to pause it
     }
     public void stop() {
         timer.cancel();
