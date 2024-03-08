@@ -55,7 +55,7 @@ abstract public class Dial extends ChronoPanel {
 
     @Override
     protected int verticalPlacement(FontMetrics metrics) {
-        return (getHeight() - metrics.getHeight()) / 2 + metrics.getAscent() + 10;
+        return super.verticalPlacement(metrics) + 10;
     }
 
     protected BufferedImage drawHands() {
