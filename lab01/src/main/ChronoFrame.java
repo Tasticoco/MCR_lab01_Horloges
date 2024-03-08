@@ -18,9 +18,12 @@ public class ChronoFrame extends JFrame {
     protected ChronoFrame(ArrayList<ChronoPanel> panels) {
         this.panels = panels;
 
-        var dim = new Dimension(220 * panels.size(), 240);
-        setSize(dim);
-        setMinimumSize(dim);
+        //var dim = new Dimension(210 * panels.size(), 240);
+        setSize(200, 200);
+        //setMinimumSize(dim);
+        //setMaximumSize(dim);
+
+
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         setLayout(new FlowLayout()); // Set layout to FlowLayout to arrange panels horizontally
 
@@ -38,7 +41,8 @@ public class ChronoFrame extends JFrame {
                 dispose();
             }
         });
-
+        pack();
+        setResizable(false);
         setVisible(true);
         revalidate();
         repaint();

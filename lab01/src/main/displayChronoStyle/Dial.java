@@ -18,10 +18,10 @@ import java.io.IOException;
  */
 abstract public class Dial extends ChronoPanel {
 
-    final int LENGTH_HOUR = 50;
-    final int LENGTH_MINUTE = 70;
-    final int LENGTH_SECOND = 90;
-    final int IMG_DIMENSION = 200;
+    final static int LENGTH_HOUR = 30;
+    final static int LENGTH_MINUTE = 50;
+    final static int LENGTH_SECOND = 80;
+    final static int IMG_DIMENSION = 200;
     BufferedImage cachedImage = null;
 
 
@@ -53,12 +53,16 @@ abstract public class Dial extends ChronoPanel {
 
     protected abstract String path();
 
+    @Override
+    protected int verticalPlacement(FontMetrics metrics) {
+        return (getHeight() - metrics.getHeight()) / 2 + metrics.getAscent() + 10;
+    }
 
     protected BufferedImage drawHands() {
 
         long time = chrono.getSeconds();
         // Create a new BufferedImage and get its Graphics2D object
-        BufferedImage image = new BufferedImage(200, 200, BufferedImage.TYPE_INT_ARGB);
+        BufferedImage image = new BufferedImage(IMG_DIMENSION, IMG_DIMENSION, BufferedImage.TYPE_INT_ARGB);
         Graphics2D g2d = image.createGraphics();
 
         // Get the current time
@@ -66,9 +70,9 @@ abstract public class Dial extends ChronoPanel {
         long minutes = (time % 3600) / 60;
         long seconds = time % 60;
 
-        // Calculate the angles for the hands
-        double hourAngle = Math.toRadians((hours % 12 + minutes / 60.0) * 30 - 90);
-        double minuteAngle = Math.toRadians(minutes * 6 - 90);
+        // Calculate the angles for the hands, hour and minute are smooth
+        double hourAngle = Math.toRadians(((hours % 12) + minutes / 60.0 + seconds / 3600.0) * 30 - 90);
+        double minuteAngle = Math.toRadians((minutes + seconds / 60.0) * 6 - 90);
         double secondAngle = Math.toRadians(seconds * 6 - 90);
 
         int middle = super.getWidth() / 2;
@@ -81,15 +85,16 @@ abstract public class Dial extends ChronoPanel {
         int secondY = (int) (middle + LENGTH_SECOND * Math.sin(secondAngle));
 
         // Draw the hands
-        g2d.setColor(Color.BLACK);
-        g2d.setStroke(new BasicStroke(2));
-        g2d.drawLine(middle, middle, hourX, hourY);
+        g2d.setColor(secondColor());
+        g2d.setStroke(new BasicStroke(1));
+        g2d.drawLine(middle, middle, secondX, secondY);
         g2d.setColor(minuteColor());
         g2d.setStroke(new BasicStroke(2));
         g2d.drawLine(middle, middle, minuteX, minuteY);
-        g2d.setColor(secondColor());
-        g2d.setStroke(new BasicStroke(2));
-        g2d.drawLine(middle, middle, secondX, secondY);
+        g2d.setColor(Color.BLACK);
+        g2d.setStroke(new BasicStroke(3));
+        g2d.drawLine(middle, middle, hourX, hourY);
+
 
         return image;
     }
@@ -111,7 +116,6 @@ abstract public class Dial extends ChronoPanel {
 
         // add the buffered image to cache
         cachedImage = bimage;
-
     }
 
     private void drawImage(Graphics g) {

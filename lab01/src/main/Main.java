@@ -9,7 +9,7 @@ package main;
 public class Main {
     public static void test() {
         Chrono chrono = new Chrono();
-        ControlFrame controlFrame = new ControlFrame(2);
+        ControlFrame controlFrame = new ControlFrame(5);
     }
 
     public static void main(String[] args) {

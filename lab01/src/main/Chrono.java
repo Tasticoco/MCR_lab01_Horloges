@@ -13,7 +13,7 @@ import java.util.TimerTask;
  */
 public class Chrono extends Subject {
     Timer timer;
-    long seconds = 0;
+    long seconds = 86380;
     boolean isRunning = false;
 
     static int totId = 0;
@@ -35,7 +35,10 @@ public class Chrono extends Subject {
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
-                if (isRunning) seconds++;
+                if (isRunning) {
+                    seconds++;
+                    if (seconds >= 86400) seconds = 0;
+                }
                 obsNotify();
             }
         }, 1000, 1000);

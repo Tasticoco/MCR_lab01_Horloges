@@ -7,6 +7,7 @@ import main.displayChronoStyle.Numeric;
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.function.Function;
 
 /**
  * @author Arthur Junod
@@ -32,30 +33,17 @@ public class ControlPanelEnd extends ControlPanel {
         add(arab);
         add(num);
 
-        roman.addActionListener(e -> {
-            ArrayList<ChronoPanel> romans = new ArrayList<>();
-            for (Chrono chrono : chronos) {
-                romans.add(new Roman(chrono));
-            }
-            new ChronoFrame(romans);
-        });
-
-        arab.addActionListener(e -> {
-            ArrayList<ChronoPanel> arabics = new ArrayList<>();
-            for (Chrono chrono : chronos) {
-                arabics.add(new Arabic(chrono));
-            }
-            new ChronoFrame(arabics);
-        });
-
-        num.addActionListener(e -> {
-                    ArrayList<ChronoPanel> numerics = new ArrayList<>();
-                    for (Chrono chrono : chronos) {
-                        numerics.add(new Numeric(chrono));
-                    }
-                    new ChronoFrame(numerics);
-                }
-        );
+        // Refactored action listeners
+        roman.addActionListener(e -> createAndShowChronoFrame(Roman::new));
+        arab.addActionListener(e -> createAndShowChronoFrame(Arabic::new));
+        num.addActionListener(e -> createAndShowChronoFrame(Numeric::new));
     }
 
+    private void createAndShowChronoFrame(Function<Chrono, ChronoPanel> constructor) {
+        ArrayList<ChronoPanel> panels = new ArrayList<>();
+        for (Chrono chrono : chronos) {
+            panels.add(constructor.apply(chrono));
+        }
+        new ChronoFrame(panels);
+    }
 }

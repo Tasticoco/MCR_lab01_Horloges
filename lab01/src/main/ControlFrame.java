@@ -26,6 +26,7 @@ public class ControlFrame extends JFrame {
         pack();
         setBackground(Color.GRAY);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setResizable(false);
         setVisible(true);
         revalidate();
         repaint();

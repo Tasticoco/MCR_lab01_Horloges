@@ -46,9 +46,13 @@ abstract public class ChronoPanel extends JPanel implements Observer {
         // Determine the X coordinate for the text
         int x = (getWidth() - metrics.stringWidth(graphString())) / 2;
         // Determine the Y coordinate for the text (note we add the ascent, as in java 2d 0 is top of the screen)
-        int y = ((getHeight() - metrics.getHeight()) / 2) + metrics.getAscent();
+        int y = verticalPlacement(metrics);
         // Draw the String
         g.drawString(graphString(), x, y);
+    }
+
+    protected int verticalPlacement(FontMetrics metrics) {
+        return (getHeight() - metrics.getHeight()) / 2 + metrics.getAscent();
     }
 
     public String graphString() {
