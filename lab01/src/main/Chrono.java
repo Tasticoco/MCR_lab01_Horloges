@@ -13,7 +13,7 @@ import java.util.TimerTask;
  */
 public class Chrono extends Subject {
     Timer timer;
-    long seconds = 86380;
+    long seconds = 0;
     boolean isRunning = false;
 
     static int totId = 0;
