@@ -7,19 +7,24 @@ import main.displayChronoStyle.Numeric;
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.LinkedList;
 
-public class ControlPanelEnd extends ControlPanel{
+/**
+ * @author Arthur Junod
+ * @author Edwin Haeffner
+ * @version 1.0
+ * @since 2024-02-22
+ */
+public class ControlPanelEnd extends ControlPanel {
 
     ArrayList<Chrono> chronos;
+
     public ControlPanelEnd(ArrayList<Chrono> chronos) {
         super(null);
         this.chronos = chronos;
     }
 
     @Override
-    protected void drawComponents(){
+    protected void drawComponents() {
         setLayout(new FlowLayout(FlowLayout.RIGHT, 7, 7));
         add(new JLabel("Tous les chronos"));
         //Adding buttons to the panel
@@ -44,12 +49,12 @@ public class ControlPanelEnd extends ControlPanel{
         });
 
         num.addActionListener(e -> {
-            ArrayList<ChronoPanel> numerics = new ArrayList<>();
-            for (Chrono chrono : chronos) {
-                numerics.add(new Numeric(chrono));
-            }
-            new ChronoFrame(numerics);
-        }
+                    ArrayList<ChronoPanel> numerics = new ArrayList<>();
+                    for (Chrono chrono : chronos) {
+                        numerics.add(new Numeric(chrono));
+                    }
+                    new ChronoFrame(numerics);
+                }
         );
     }
 
