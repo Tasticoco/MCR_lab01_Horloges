@@ -1,19 +1,22 @@
 package main.displayChronoStyle;
 
 import main.Chrono;
-import main.ChronoFrame;
 import main.ChronoPanel;
 
-import javax.swing.*;
 import java.awt.*;
-import java.awt.image.BufferedImage;
 
+/**
+ * @author Arthur Junod
+ * @author Edwin Haeffner
+ * @version 1.0
+ * @since 2024-02-22
+ */
 public class Numeric extends ChronoPanel {
 
     public Numeric(Chrono chrono) {
         super(chrono);
     }
-    
+
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);

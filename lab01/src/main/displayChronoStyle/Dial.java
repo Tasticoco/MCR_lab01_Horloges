@@ -10,6 +10,12 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
+/**
+ * @author Arthur Junod
+ * @author Edwin Haeffner
+ * @version 1.0
+ * @since 2024-02-22
+ */
 abstract public class Dial extends ChronoPanel {
 
     final int LENGTH_HOUR = 50;
@@ -19,7 +25,7 @@ abstract public class Dial extends ChronoPanel {
     BufferedImage cachedImage = null;
 
 
-    public Dial(Chrono chrono){
+    public Dial(Chrono chrono) {
         super(chrono);
     }
 
@@ -42,7 +48,7 @@ abstract public class Dial extends ChronoPanel {
         if (img.getWidth(null) == -1 || img.getHeight(null) == -1) {
             System.out.println("Error loading file: \"" + new File(path()).getAbsolutePath() + "\"");
         }
-        return  img;
+        return img;
     }
 
     protected abstract String path();
@@ -94,8 +100,7 @@ abstract public class Dial extends ChronoPanel {
      * @param img The Image to be converted
      * @return The converted BufferedImage
      */
-    public void addImageToCache(Image img)
-    {
+    public void addImageToCache(Image img) {
         // Create a buffered image with transparency
         BufferedImage bimage = new BufferedImage(img.getWidth(null), img.getHeight(null), BufferedImage.TYPE_INT_ARGB);
 
@@ -109,8 +114,8 @@ abstract public class Dial extends ChronoPanel {
 
     }
 
-    private void drawImage(Graphics g){
-        if(cachedImage == null){
+    private void drawImage(Graphics g) {
+        if (cachedImage == null) {
             try {
                 Image img = graphImage();
                 if (img != null) {
@@ -125,11 +130,12 @@ abstract public class Dial extends ChronoPanel {
         } else {
             int x = (getWidth() - cachedImage.getWidth(null)) / 2;
             int y = (getHeight() - cachedImage.getHeight(null)) / 2;
-            g.drawImage(cachedImage,x,y,this);
+            g.drawImage(cachedImage, x, y, this);
         }
     }
 
     protected abstract Color secondColor();
+
     protected abstract Color minuteColor();
 
 }

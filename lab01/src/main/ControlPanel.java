@@ -8,6 +8,12 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.Collections;
 
+/**
+ * @author Arthur Junod
+ * @author Edwin Haeffner
+ * @version 1.0
+ * @since 2024-02-22
+ */
 public class ControlPanel extends JPanel {
     Chrono chrono;
     JButton start = new JButton("Démarrer");
@@ -24,7 +30,7 @@ public class ControlPanel extends JPanel {
         setVisible(true);
     }
 
-    protected void drawComponents(){
+    protected void drawComponents() {
         setLayout(new FlowLayout(7));
         add(new JLabel(chrono.toString()));
         //Adding buttons to the panel

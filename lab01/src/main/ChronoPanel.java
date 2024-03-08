@@ -6,12 +6,17 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 
+/**
+ * @author Arthur Junod
+ * @author Edwin Haeffner
+ * @version 1.0
+ * @since 2024-02-22
+ */
 abstract public class ChronoPanel extends JPanel implements Observer {
     protected Chrono chrono;
 
-    protected ChronoPanel(Chrono chrono){
+    protected ChronoPanel(Chrono chrono) {
         this.chrono = chrono;
         chrono.attach(this);
 
@@ -35,7 +40,7 @@ abstract public class ChronoPanel extends JPanel implements Observer {
         repaint();
     }
 
-    protected void drawText(Graphics g){
+    protected void drawText(Graphics g) {
 
         FontMetrics metrics = g.getFontMetrics(g.getFont());
         // Determine the X coordinate for the text
@@ -46,11 +51,11 @@ abstract public class ChronoPanel extends JPanel implements Observer {
         g.drawString(graphString(), x, y);
     }
 
-    public String graphString(){
+    public String graphString() {
         return chrono.toString();
     }
 
-    public void detatch(){
+    public void detatch() {
         chrono.detach(this);
     }
 }

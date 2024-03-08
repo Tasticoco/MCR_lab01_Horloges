@@ -3,17 +3,20 @@ package main.displayChronoStyle.DialType;
 import main.Chrono;
 import main.displayChronoStyle.Dial;
 
-import javax.imageio.ImageIO;
 import java.awt.*;
-import java.io.IOException;
-import java.util.Objects;
 
+/**
+ * @author Arthur Junod
+ * @author Edwin Haeffner
+ * @version 1.0
+ * @since 2024-02-22
+ */
 public class Roman extends Dial {
     public Roman(Chrono chrono) {
         super(chrono);
     }
 
-    protected String path(){
+    protected String path() {
         return "resources/images/cadran_chiffres_romains.jpg";
     }
 

@@ -1,22 +1,24 @@
 package main;
 
 import javax.swing.*;
-import main.observersModel.Observer;
-
 import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.io.IOException;
 import java.util.ArrayList;
 
-public class ChronoFrame extends JFrame{
+/**
+ * @author Arthur Junod
+ * @author Edwin Haeffner
+ * @version 1.0
+ * @since 2024-02-22
+ */
+public class ChronoFrame extends JFrame {
 
     protected long time;
     ArrayList<ChronoPanel> panels;
 
-    protected ChronoFrame(ArrayList<ChronoPanel> panels){
+    protected ChronoFrame(ArrayList<ChronoPanel> panels) {
         this.panels = panels;
 
-        var dim = new Dimension(220 * panels.size(),240);
+        var dim = new Dimension(220 * panels.size(), 240);
         setSize(dim);
         setMinimumSize(dim);
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
@@ -24,13 +26,13 @@ public class ChronoFrame extends JFrame{
 
         // Create and add panels
         for (ChronoPanel panel : panels) {
-            panel.setPreferredSize(new Dimension(200,200));
+            panel.setPreferredSize(new Dimension(200, 200));
             add(panel); // Add the panel to the ChronoFrame
         }
 
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent windowEvent) {
-                for(ChronoPanel panel : panels){
+                for (ChronoPanel panel : panels) {
                     panel.detatch();
                 }
                 dispose();
