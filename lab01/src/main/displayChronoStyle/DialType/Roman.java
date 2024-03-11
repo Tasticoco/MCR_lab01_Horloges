@@ -30,5 +30,4 @@ public class Roman extends Dial {
         return Color.decode("0x808080");
     }
 
-
 }

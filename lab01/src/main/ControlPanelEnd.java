@@ -33,12 +33,16 @@ public class ControlPanelEnd extends ControlPanel {
         add(arab);
         add(num);
 
-        // Refactored action listeners
         roman.addActionListener(e -> createAndShowChronoFrame(Roman::new));
         arab.addActionListener(e -> createAndShowChronoFrame(Arabic::new));
         num.addActionListener(e -> createAndShowChronoFrame(Numeric::new));
     }
 
+    /**
+     * Create and show a ChronoFrame with the given constructor
+     *
+     * @param constructor the constructor to use to create the ChronoPanel
+     */
     private void createAndShowChronoFrame(Function<Chrono, ChronoPanel> constructor) {
         ArrayList<ChronoPanel> panels = new ArrayList<>();
         for (Chrono chrono : chronos) {

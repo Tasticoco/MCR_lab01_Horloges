@@ -7,14 +7,20 @@ package main;
  * @since 2024-02-22
  */
 public class Main {
-    public static void test() {
-        Chrono chrono = new Chrono();
-        ControlFrame controlFrame = new ControlFrame(5);
-    }
 
     public static void main(String[] args) {
-        System.out.println("Hello world!");
-        test();
+
+        int nbChrono;
+        //If no argument is given, we create a control frame with 3 chrono
+        if (args.length == 0) {
+            nbChrono = 3;
+            System.out.println("No argument given, creating 3 chronos");
+        } else {
+            nbChrono = Integer.parseInt(args[0]);
+            System.out.println("Creating " + nbChrono + " chronos");
+        }
+
+        new ControlFrame(nbChrono);
     }
 
 }

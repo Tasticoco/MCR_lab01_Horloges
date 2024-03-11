@@ -11,20 +11,13 @@ import java.util.ArrayList;
  * @since 2024-02-22
  */
 public class ChronoFrame extends JFrame {
-
-    protected long time;
     ArrayList<ChronoPanel> panels;
 
     protected ChronoFrame(ArrayList<ChronoPanel> panels) {
+
         this.panels = panels;
-
-        //var dim = new Dimension(210 * panels.size(), 240);
         setSize(200, 200);
-        //setMinimumSize(dim);
-        //setMaximumSize(dim);
-
-
-        setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE); // Must use a window listener to close the frame to ensure the panels are detached
         setLayout(new FlowLayout()); // Set layout to FlowLayout to arrange panels horizontally
 
         // Create and add panels
@@ -33,6 +26,7 @@ public class ChronoFrame extends JFrame {
             add(panel); // Add the panel to the ChronoFrame
         }
 
+        // Detach all panels when the frame is closed
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent windowEvent) {
                 for (ChronoPanel panel : panels) {
@@ -41,6 +35,7 @@ public class ChronoFrame extends JFrame {
                 dispose();
             }
         });
+
         pack();
         setResizable(false);
         setVisible(true);

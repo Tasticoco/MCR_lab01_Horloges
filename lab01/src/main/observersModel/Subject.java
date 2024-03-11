@@ -12,18 +12,31 @@ public abstract class Subject {
 
     LinkedList<Observer> observers = new LinkedList<>();
 
+    /**
+     * Attach an observer to the subject
+     *
+     * @param o the observer to attach
+     */
     public void attach(Observer o) {
         if (o != null) {
             observers.add(o);
         }
     }
 
+    /**
+     * Detach an observer from the subject
+     *
+     * @param o the observer to detach
+     */
     public void detach(Observer o) {
         if (o != null) {
             observers.remove(o);
         }
     }
 
+    /**
+     * Notify all the observers
+     */
     public void obsNotify() {
         for (Observer o : observers) {
             o.update();

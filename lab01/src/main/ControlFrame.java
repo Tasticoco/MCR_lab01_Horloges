@@ -16,13 +16,17 @@ public class ControlFrame extends JFrame {
 
     public ControlFrame(int nbChrono) {
         setTitle("Panneau de contrôle");
+
+        //Adding the control panel for each chrono
         setLayout(new GridLayout(nbChrono + 1, 1));
         for (int i = 0; i < nbChrono; i++) {
             Chrono c = new Chrono();
             chronos.add(c);
             add(new ControlPanel(c));
         }
+        //Adding the last panel
         add(new ControlPanelEnd(chronos));
+
         pack();
         setBackground(Color.GRAY);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

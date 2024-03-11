@@ -29,4 +29,5 @@ public class Arabic extends Dial {
     protected Color minuteColor() {
         return Color.decode("0x0000FF");
     }
+
 }

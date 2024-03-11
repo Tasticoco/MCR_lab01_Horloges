@@ -23,6 +23,11 @@ public class Numeric extends ChronoPanel {
         drawText(g);
     }
 
+    /**
+     * Generates the String to be displayed on the panel
+     *
+     * @return the string to be displayed
+     */
     @Override
     public String graphString() {
         long time = chrono.getSeconds();

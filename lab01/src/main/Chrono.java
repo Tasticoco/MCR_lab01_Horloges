@@ -15,7 +15,6 @@ public class Chrono extends Subject {
     Timer timer;
     long seconds = 0;
     boolean isRunning = false;
-
     static int totId = 0;
     int id;
 
@@ -24,10 +23,17 @@ public class Chrono extends Subject {
         id = totId++;
     }
 
+    /**
+     * @return the string to be displayed
+     */
+    @Override
     public String toString() {
         return "Chrono #" + id;
     }
 
+    /**
+     * Starts the timer
+     */
     public void start() {
         if (!isRunning) {
             isRunning = true;
@@ -41,29 +47,32 @@ public class Chrono extends Subject {
                 }
                 obsNotify();
             }
-        }, 1000, 1000);
+        }, 1000, 1000); //Started at 1000ms, so it doesn't count a second as soon as we start it
     }
 
+    /**
+     * Pauses the timer
+     */
     public void pause() {
         if (isRunning) {
             isRunning = false;
-            timer.cancel();
-            timer = new Timer(); // Create a new Timer for when we resume
+            timer.cancel(); //Destroy the timer
+            timer = new Timer(); // Create a new Timer for when we resume, only way to effectively "pause" it
             obsNotify();
         } else start(); // It's especially used for when we click on the clock itself to pause it
     }
 
-    public void stop() {
-        timer.cancel();
-        isRunning = false;
-        obsNotify();
-    }
-
+    /**
+     * Resets the timer
+     */
     public void reset() {
         seconds = 0;
         obsNotify();
     }
 
+    /**
+     * @return the seconds
+     */
     public long getSeconds() {
         return seconds;
     }
