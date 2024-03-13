@@ -12,17 +12,18 @@ import java.util.ArrayList;
  */
 public class ChronoFrame extends JFrame {
     ArrayList<ChronoPanel> panels;
+    private final Dimension dimension = new Dimension(200, 200);
 
     protected ChronoFrame(ArrayList<ChronoPanel> panels) {
 
         this.panels = panels;
-        setSize(200, 200);
+        setSize(dimension);
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE); // Must use a window listener to close the frame to ensure the panels are detached
-        setLayout(new FlowLayout()); // Set layout to FlowLayout to arrange panels horizontally
+        setLayout(new FlowLayout());
 
         // Create and add panels
         for (ChronoPanel panel : panels) {
-            panel.setPreferredSize(new Dimension(200, 200));
+            panel.setPreferredSize(dimension);
             add(panel); // Add the panel to the ChronoFrame
         }
 
@@ -37,7 +38,11 @@ public class ChronoFrame extends JFrame {
         });
 
         pack();
-        setResizable(false);
+        // Using insets to ensure the minimum size is set correctly so the panels are not cut off
+        Insets insets = getInsets();
+        Dimension minDimension = new Dimension(dimension.width + insets.left + insets.right, dimension.height + insets.top + insets.bottom);
+        setMinimumSize(minDimension);
+
         setVisible(true);
         revalidate();
         repaint();

@@ -43,7 +43,7 @@ public class Chrono extends Subject {
             public void run() {
                 if (isRunning) {
                     seconds++;
-                    if (seconds >= 86400) seconds = 0;
+                    if (seconds >= 86400) seconds = 0; //Reset the timer after 24 hours
                 }
                 obsNotify();
             }

@@ -51,11 +51,9 @@ abstract public class ChronoPanel extends JPanel implements Observer {
     protected void drawText(Graphics g) {
 
         FontMetrics metrics = g.getFontMetrics(g.getFont());
-        // Determine the X coordinate for the text
         int x = (getWidth() - metrics.stringWidth(graphString())) / 2;
-        // Determine the Y coordinate for the text
         int y = verticalPlacement(metrics);
-        // Draw the String
+        
         g.drawString(graphString(), x, y);
     }
 
