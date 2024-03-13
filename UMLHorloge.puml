@@ -1,4 +1,5 @@
 @startuml Horloge
+!pragma smetana
 skinparam classAttributeIconSize 0
 
 class Arabic {
