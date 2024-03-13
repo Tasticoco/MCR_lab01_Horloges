@@ -11,7 +11,7 @@ import java.util.Map;
  * @since 2024-02-22
  */
 public class ImageCacheManager {
-    private static final Map<String, BufferedImage> imageCache = new HashMap<>();
+    private static final Map<String, BufferedImage> IMAGE_CACHE = new HashMap<>();
 
     /**
      * Add an image to the cache
@@ -20,7 +20,7 @@ public class ImageCacheManager {
      * @param image the image to add
      */
     public static void addImage(String key, BufferedImage image) {
-        imageCache.put(key, image);
+        IMAGE_CACHE.put(key, image);
     }
 
     /**
@@ -30,7 +30,7 @@ public class ImageCacheManager {
      * @return the image
      */
     public static BufferedImage getImage(String key) {
-        return imageCache.get(key);
+        return IMAGE_CACHE.get(key);
     }
 
     /**
@@ -40,6 +40,6 @@ public class ImageCacheManager {
      * @return true if the image is cached, false otherwise
      */
     public static boolean isImageCached(String key) {
-        return imageCache.containsKey(key);
+        return IMAGE_CACHE.containsKey(key);
     }
 }

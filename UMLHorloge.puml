@@ -1,0 +1,130 @@
+@startuml Horloge
+skinparam classAttributeIconSize 0
+
+class Arabic {
+  + Arabic(Chrono)
+  # path(): String
+  # secondColor(): Color
+  # minuteColor(): Color
+}
+
+class Chrono {
+  + Chrono()
+  - timer: Timer
+  - isRunning: boolean
+  - id: int
+  - seconds: long
+  - {static} totId: int
+  + getSeconds(): long
+  + start(): void
+  + pause(): void
+  + isRunning(): boolean
+  + toString(): String
+  + reset(): void
+}
+
+class ChronoFrame {
+  # ChronoFrame(ArrayList<ChronoPanel>)
+}
+
+abstract class ChronoPanel {
+  # ChronoPanel(Chrono)
+  + update(): void
+  + graphString(): String
+  + detatch(): void
+  # drawText(Graphics): void
+  # verticalPlacement(FontMetrics): int
+  # paintComponent(Graphics): void
+}
+
+class ControlFrame {
+  + ControlFrame(int)
+}
+
+class ControlPanel {
+  + ControlPanel(Chrono)
+  - start: JButton
+  # arab: JButton
+  # roman: JButton
+  - stop: JButton
+  - reset: JButton
+  # num: JButton
+  # drawComponents(): void
+}
+
+class ControlPanelEnd {
+  + ControlPanelEnd(ArrayList<Chrono>)
+  # drawComponents(): void
+  - createAndShowChronoFrame(Function<Chrono, ChronoPanel>): void
+}
+
+abstract class Dial {
+  + Dial(Chrono)
+  - {static} LENGTH_HOUR: int
+  - {static} IMG_DIMENSION: int
+  - {static} LENGTH_MINUTE: int
+  - {static} LENGTH_SECOND: int
+  # paintComponent(Graphics): void
+  + graphImage(): Image
+  # verticalPlacement(FontMetrics): int
+  # drawHands(): BufferedImage
+  + addImageToCache(Image): void
+  - key(): String
+  - drawImage(Graphics): void
+  # {abstract} secondColor(): Color
+  # {abstract} minuteColor(): Color
+  # {abstract} path(): String
+}
+
+class ImageCacheManager {
+  - {static} IMAGE_CACHE: Map<String, BufferedImage>
+  + {static} addImage(String, BufferedImage): void
+  + {static} getImage(String): BufferedImage
+  + {static} isImageCached(String): boolean
+}
+
+class Numeric {
+  + Numeric(Chrono)
+  # paintComponent(Graphics): void
+  + graphString(): String
+}
+
+interface Observer {
+  + {abstract} update(): void
+}
+
+class Roman {
+  + Roman(Chrono)
+  # path(): String
+  # minuteColor(): Color
+  # secondColor(): Color
+}
+
+abstract class Subject {
+  + attach(Observer): void
+  + detach(Observer): void
+  + obsNotify(): void
+}
+
+Subject "1" --> "*" Observer : notify
+ControlPanelEnd "1" --> "3..*" Chrono : display
+ControlPanel "1" --> "1" Chrono : control
+ChronoPanel "1" --> "1" Chrono : display and control
+
+
+Arabic             -up-^  Dial
+Roman              -up-^  Dial     
+Chrono             -up-^  Subject
+ChronoPanel        .up.^  Observer     
+ControlPanelEnd    -up-^  ControlPanel
+Dial               -up-^  ChronoPanel
+Numeric            -up-^  ChronoPanel
+
+ImageCacheManager -[hidden]right- ControlFrame
+ControlPanelEnd -[hidden]right- Dial
+ChronoFrame -[hidden]right- Subject
+ControlFrame -[hidden]right- ChronoFrame
+Observer -[hidden]left- Subject
+ControlPanel -[hidden]up- ChronoFrame
+Chrono -[hidden]right- ChronoPanel
+@enduml
