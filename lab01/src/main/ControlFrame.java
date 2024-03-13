@@ -12,13 +12,12 @@ import java.util.ArrayList;
  */
 public class ControlFrame extends JFrame {
 
-    ArrayList<Chrono> chronos = new ArrayList<>();
-
     public ControlFrame(int nbChrono) {
         setTitle("Panneau de contrôle");
 
         //Adding the control panel for each chrono
         setLayout(new GridLayout(nbChrono + 1, 1));
+        ArrayList<Chrono> chronos = new ArrayList<>();
         for (int i = 0; i < nbChrono; i++) {
             Chrono c = new Chrono();
             chronos.add(c);

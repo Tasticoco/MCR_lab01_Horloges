@@ -17,7 +17,7 @@ import java.util.function.Function;
  */
 public class ControlPanelEnd extends ControlPanel {
 
-    ArrayList<Chrono> chronos;
+    private final ArrayList<Chrono> chronos;
 
     public ControlPanelEnd(ArrayList<Chrono> chronos) {
         super(null);

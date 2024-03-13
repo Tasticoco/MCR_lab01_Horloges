@@ -11,12 +11,10 @@ import java.util.ArrayList;
  * @since 2024-02-22
  */
 public class ChronoFrame extends JFrame {
-    ArrayList<ChronoPanel> panels;
-    private final Dimension dimension = new Dimension(200, 200);
 
     protected ChronoFrame(ArrayList<ChronoPanel> panels) {
 
-        this.panels = panels;
+        Dimension dimension = new Dimension(200, 200);
         setSize(dimension);
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE); // Must use a window listener to close the frame to ensure the panels are detached
         setLayout(new FlowLayout());

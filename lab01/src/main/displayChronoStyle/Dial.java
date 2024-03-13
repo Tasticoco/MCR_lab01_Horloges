@@ -18,10 +18,10 @@ import java.io.IOException;
  */
 abstract public class Dial extends ChronoPanel {
 
-    final static int LENGTH_HOUR = 30;
-    final static int LENGTH_MINUTE = 50;
-    final static int LENGTH_SECOND = 80;
-    final static int IMG_DIMENSION = 200;
+    private final static int LENGTH_HOUR = 30;
+    private final static int LENGTH_MINUTE = 50;
+    private final static int LENGTH_SECOND = 80;
+    private final static int IMG_DIMENSION = 200;
 
 
     public Dial(Chrono chrono) {

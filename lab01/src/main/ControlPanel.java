@@ -15,13 +15,13 @@ import java.util.Collections;
  * @since 2024-02-22
  */
 public class ControlPanel extends JPanel {
-    Chrono chrono;
-    JButton start = new JButton("Démarrer");
-    JButton stop = new JButton("Arrêter");
-    JButton reset = new JButton("Réinitialiser");
-    JButton roman = new JButton("Cadran romain");
-    JButton arab = new JButton("Cadran arabe");
-    JButton num = new JButton("Numérique");
+    private final Chrono chrono;
+    private final JButton start = new JButton("Démarrer");
+    private final JButton stop = new JButton("Arrêter");
+    private final JButton reset = new JButton("Réinitialiser");
+    protected JButton roman = new JButton("Cadran romain");
+    protected JButton arab = new JButton("Cadran arabe");
+    protected JButton num = new JButton("Numérique");
 
     public ControlPanel(Chrono c) {
 
@@ -31,7 +31,7 @@ public class ControlPanel extends JPanel {
     }
 
     protected void drawComponents() {
-        setLayout(new FlowLayout(7));
+        setLayout(new FlowLayout());
         add(new JLabel(chrono.toString()));
         //Adding buttons to the panel
         add(start);

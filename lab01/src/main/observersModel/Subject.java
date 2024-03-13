@@ -10,7 +10,7 @@ import java.util.LinkedList;
  */
 public abstract class Subject {
 
-    LinkedList<Observer> observers = new LinkedList<>();
+    private final LinkedList<Observer> observers = new LinkedList<>();
 
     /**
      * Attach an observer to the subject
