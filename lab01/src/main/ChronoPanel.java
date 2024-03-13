@@ -23,8 +23,11 @@ abstract public class ChronoPanel extends JPanel implements Observer {
         this.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                // Handle the mouse click event here
-                chrono.pause();
+                //Start or pause the chrono when the panel is clicked
+                if (chrono.isRunning())
+                    chrono.pause();
+                else
+                    chrono.start();
             }
         });
 
@@ -53,7 +56,7 @@ abstract public class ChronoPanel extends JPanel implements Observer {
         FontMetrics metrics = g.getFontMetrics(g.getFont());
         int x = (getWidth() - metrics.stringWidth(graphString())) / 2;
         int y = verticalPlacement(metrics);
-        
+
         g.drawString(graphString(), x, y);
     }
 

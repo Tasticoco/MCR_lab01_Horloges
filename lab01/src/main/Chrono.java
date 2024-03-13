@@ -12,11 +12,11 @@ import java.util.TimerTask;
  * @since 2024-02-22
  */
 public class Chrono extends Subject {
-    Timer timer;
-    long seconds = 0;
-    boolean isRunning = false;
-    static int totId = 0;
-    int id;
+    private Timer timer;
+    private long seconds = 0;
+    private boolean isRunning = false;
+    private static int totId = 0;
+    private final int id;
 
     public Chrono() {
         timer = new Timer();
@@ -37,17 +37,17 @@ public class Chrono extends Subject {
     public void start() {
         if (!isRunning) {
             isRunning = true;
-        }
-        timer.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                if (isRunning) {
-                    seconds++;
-                    if (seconds >= 86400) seconds = 0; //Reset the timer after 24 hours
+            timer.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    if (isRunning) {
+                        seconds++;
+                        if (seconds >= 86400) seconds = 0; //Reset the timer after 24 hours
+                    }
+                    obsNotify();
                 }
-                obsNotify();
-            }
-        }, 1000, 1000); //Started at 1000ms, so it doesn't count a second as soon as we start it
+            }, 1000, 1000); //Started at 1000ms, so it doesn't count a second as soon as we start it
+        }
     }
 
     /**
@@ -59,7 +59,7 @@ public class Chrono extends Subject {
             timer.cancel(); //Destroy the timer
             timer = new Timer(); // Create a new Timer for when we resume, only way to effectively "pause" it
             obsNotify();
-        } else start(); // It's especially used for when we click on the clock itself to pause it
+        }
     }
 
     /**
@@ -75,5 +75,12 @@ public class Chrono extends Subject {
      */
     public long getSeconds() {
         return seconds;
+    }
+
+    /**
+     * @return the running state
+     */
+    public boolean isRunning() {
+        return isRunning;
     }
 }
